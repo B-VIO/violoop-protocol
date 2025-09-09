@@ -1,0 +1,9 @@
+[
+  {
+    "session_id": "8d8d3952-6a8f-4f18-939d-3174361e18fa",
+    "transcript_path": "/Users/jialinhe/.claude/projects/-Users-jialinhe/8d8d3952-6a8f-4f18-939d-3174361e18fa.jsonl",
+    "cwd": "/Users/jialinhe/B-VIO-repos/violoop-protocol",
+    "hook_event_name": "Notification",
+    "message": "Claude needs your permission to use Bash"
+  }
+]

@@ -1,0 +1,147 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "ControlEvent": {
+      "type": "object",
+      "required": ["id", "timestamp", "command", "target"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "timestamp": {
+          "type": "integer"
+        },
+        "command": {
+          "$ref": "#/definitions/ControlCommand"
+        },
+        "target": {
+          "$ref": "#/definitions/TargetDevice"
+        },
+        "authorization": {
+          "type": "string",
+          "description": "Reference to DecisionEvent if required"
+        }
+      }
+    },
+    "ControlCommand": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["power", "input", "stream", "session", "workflow"]
+        },
+        "power": {
+          "$ref": "#/definitions/PowerCommand"
+        },
+        "input": {
+          "$ref": "#/definitions/InputCommand"
+        },
+        "stream": {
+          "$ref": "#/definitions/StreamCommand"
+        }
+      }
+    },
+    "PowerCommand": {
+      "type": "object",
+      "required": ["action"],
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["on", "off", "reset", "force_off", "wake_on_lan"]
+        },
+        "delay_ms": {
+          "type": "integer",
+          "description": "Delay before action"
+        }
+      }
+    },
+    "InputCommand": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["keyboard", "mouse"]
+        },
+        "keyboard": {
+          "type": "object",
+          "properties": {
+            "keys": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "text": {
+              "type": "string"
+            },
+            "modifiers": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["ctrl", "alt", "shift", "cmd", "win"]
+              }
+            }
+          }
+        },
+        "mouse": {
+          "type": "object",
+          "properties": {
+            "x": {"type": "integer"},
+            "y": {"type": "integer"},
+            "button": {
+              "type": "string",
+              "enum": ["left", "right", "middle"]
+            },
+            "action": {
+              "type": "string",
+              "enum": ["move", "click", "double_click", "drag"]
+            }
+          }
+        }
+      }
+    },
+    "StreamCommand": {
+      "type": "object",
+      "required": ["action"],
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["start", "stop", "configure"]
+        },
+        "config": {
+          "type": "object",
+          "properties": {
+            "resolution": {
+              "type": "string",
+              "enum": ["720p", "1080p", "auto"]
+            },
+            "fps": {
+              "type": "integer",
+              "minimum": 15,
+              "maximum": 60
+            },
+            "bitrate": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "TargetDevice": {
+      "type": "object",
+      "required": ["device_id"],
+      "properties": {
+        "device_id": {
+          "type": "string"
+        },
+        "component": {
+          "type": "string",
+          "enum": ["lite", "pro"]
+        }
+      }
+    }
+  }
+}

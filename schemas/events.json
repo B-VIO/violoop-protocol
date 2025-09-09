@@ -1,0 +1,145 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "PromptEvent": {
+      "type": "object",
+      "required": ["id", "timestamp", "nonce", "source", "action", "risk_level"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "timestamp": {
+          "type": "integer",
+          "description": "Unix timestamp in milliseconds"
+        },
+        "nonce": {
+          "type": "string",
+          "description": "Random nonce for replay protection"
+        },
+        "source": {
+          "$ref": "#/definitions/EventSource"
+        },
+        "action": {
+          "$ref": "#/definitions/ActionRequest"
+        },
+        "risk_level": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "critical"]
+        },
+        "context": {
+          "type": "object",
+          "description": "Additional context for the approval request"
+        }
+      }
+    },
+    "DecisionEvent": {
+      "type": "object",
+      "required": ["id", "prompt_id", "timestamp", "decision", "signature"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "prompt_id": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Reference to the PromptEvent"
+        },
+        "timestamp": {
+          "type": "integer"
+        },
+        "decision": {
+          "type": "string",
+          "enum": ["approve", "reject", "modify"]
+        },
+        "signature": {
+          "type": "string",
+          "description": "Ed25519 signature of the decision"
+        },
+        "signer_public_key": {
+          "type": "string",
+          "description": "Public key of the signer"
+        },
+        "modifications": {
+          "type": "object",
+          "description": "Modifications if decision is 'modify'"
+        },
+        "reason": {
+          "type": "string",
+          "description": "Optional reason for the decision"
+        }
+      }
+    },
+    "AuditRecord": {
+      "type": "object",
+      "required": ["id", "timestamp", "event_type", "hash", "prev_hash"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "timestamp": {
+          "type": "integer"
+        },
+        "event_type": {
+          "type": "string"
+        },
+        "hash": {
+          "type": "string",
+          "description": "SHA-256 hash of this record"
+        },
+        "prev_hash": {
+          "type": "string",
+          "description": "Hash of previous record in chain"
+        },
+        "data": {
+          "type": "object"
+        },
+        "signature": {
+          "type": "string",
+          "description": "Optional signature for critical events"
+        }
+      }
+    },
+    "EventSource": {
+      "type": "object",
+      "required": ["component", "session_id"],
+      "properties": {
+        "component": {
+          "type": "string",
+          "enum": ["lite", "pro", "desktop", "mobile", "agent"]
+        },
+        "session_id": {
+          "type": "string"
+        },
+        "device_id": {
+          "type": "string"
+        },
+        "user_id": {
+          "type": "string"
+        }
+      }
+    },
+    "ActionRequest": {
+      "type": "object",
+      "required": ["type", "command"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["shell", "file_write", "file_delete", "network", "system", "power"]
+        },
+        "command": {
+          "type": "string"
+        },
+        "parameters": {
+          "type": "object"
+        },
+        "estimated_impact": {
+          "type": "string",
+          "description": "Human-readable impact description"
+        }
+      }
+    }
+  }
+}
