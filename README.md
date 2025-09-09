@@ -30,6 +30,12 @@ Current: `v0.1.0`
 - `ControlEvent`: Device control commands
 - `StatusEvent`: Component health/status updates
 
+### Cloud Relay Events
+- `RelayRequest`: Request for cloud relay session
+- `RelaySession`: Active relay session state
+- `MobileStreamRequest`: Mobile streaming request
+- `RelayMetrics`: Relay performance metrics
+
 ## Security Model
 
 All critical events use:

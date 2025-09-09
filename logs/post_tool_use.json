@@ -244,5 +244,22 @@
         }
       ]
     }
+  },
+  {
+    "session_id": "8d8d3952-6a8f-4f18-939d-3174361e18fa",
+    "transcript_path": "/Users/jialinhe/.claude/projects/-Users-jialinhe/8d8d3952-6a8f-4f18-939d-3174361e18fa.jsonl",
+    "cwd": "/Users/jialinhe/B-VIO-repos/violoop-protocol",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Bash",
+    "tool_input": {
+      "command": "cd ~/B-VIO-repos/violoop-protocol && git add . && git commit -m \"Initial commit: Protocol definitions and schemas\n\n- Event schemas (PromptEvent, DecisionEvent, AuditRecord)\n- Control protocol definitions\n- TypeScript implementation with Ed25519 crypto\n- MsgPack serialization support\n- Package configuration\" && git branch -M main && git remote add origin https://github.com/B-VIO/violoop-protocol.git && git push -u origin main",
+      "description": "Push violoop-protocol repository"
+    },
+    "tool_response": {
+      "stdout": "[main (root-commit) f35a9d7] Initial commit: Protocol definitions and schemas\n 12 files changed, 1915 insertions(+)\n create mode 100644 README.md\n create mode 100644 logs/notification.json\n create mode 100644 logs/post_tool_use.json\n create mode 100644 logs/pre_tool_use.json\n create mode 100644 logs/status_line.json\n create mode 100644 package.json\n create mode 100644 schemas/control.json\n create mode 100644 schemas/events.json\n create mode 100644 ts/crypto.ts\n create mode 100644 ts/events.ts\n create mode 100644 ts/index.ts\n create mode 100644 tsconfig.json\nbranch 'main' set up to track 'origin/main'.\nTo https://github.com/B-VIO/violoop-protocol.git\n * [new branch]      main -> main",
+      "stderr": "",
+      "interrupted": false,
+      "isImage": false
+    }
   }
 ]
